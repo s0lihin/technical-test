@@ -1,0 +1,29 @@
+version: '3.8'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 5000:80
+  db:
+    image: mysql:8.0.28
+    environment:
+      MYSQL_DATABASE: 'admin'
+      MYSQL_ROOT_PASSWORD: 'admin'
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    volumes:
+      - /db:/var/lib/mysql
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+  jenkins:
+    image: jenkins/jenkins:lts
+    user: root
+    container_name: jenkins
+    ports:
+      - 8080:8080
+      - 50000:50000
+    volumes:
+      - /jenkins:/var/jenkins-home
