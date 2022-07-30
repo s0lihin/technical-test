@@ -12,6 +12,6 @@ node () {
         withCredentials([string(credentialsId: 'dockerhub', variable: 'DockerHubPwd')]) {
             sh "docker login -u fathandocker -p ${DockerHubPwd}"
         }
-        sh "docker push -it fathandocker/app-hello-world:${BUILD_NUMBER}"
+        sh "docker push fathandocker/app-hello-world:${BUILD_NUMBER}"
     }
 }
